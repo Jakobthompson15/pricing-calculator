@@ -25,8 +25,8 @@
 
         const PricingCalculator = () => {
             const [selectedTier, setSelectedTier] = React.useState('Growth');
-            const [numberOfLeads, setNumberOfLeads] = React.useState(1000);
-            const [messagesPerLead, setMessagesPerLead] = React.useState(3);
+            const [numberOfLeads, setNumberOfLeads] = React.useState('1000');
+            const [messagesPerLead, setMessagesPerLead] = React.useState('3');
 
             const pricingTiers = [
                 {
@@ -127,7 +127,7 @@
                 }
             ];
 
-            const totalMessages = numberOfLeads * messagesPerLead;
+            const totalMessages = (Number(numberOfLeads) || 0) * (Number(messagesPerLead) || 0);
             
             const calculateRecommendedTier = () => {
                 for (let tier of pricingTiers) {
@@ -178,12 +178,12 @@
                         <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
                             <div className="bg-white rounded-lg p-6 shadow-sm">
                                 <label className="block text-sm font-medium text-gray-700 mb-3">
-                                   Subscriber Count
+                                    Number of Leads/Prospects
                                 </label>
                                 <input
                                     type="number"
                                     value={numberOfLeads}
-                                    onChange={(e) => setNumberOfLeads(Number(e.target.value))}
+                                    onChange={(e) => setNumberOfLeads(e.target.value)}
                                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
                                     placeholder="1000"
                                 />
@@ -196,7 +196,7 @@
                                 <input
                                     type="number"
                                     value={messagesPerLead}
-                                    onChange={(e) => setMessagesPerLead(Number(e.target.value))}
+                                    onChange={(e) => setMessagesPerLead(e.target.value)}
                                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
                                     placeholder="3"
                                 />
@@ -301,7 +301,7 @@
                     <div className="mt-12 bg-gray-50 rounded-2xl p-8">
                         <div className="grid md:grid-cols-3 gap-8 text-center">
                             <div>
-                                <h3 className="font-semibold text-gray-900 mb-2">Fees?</h3>
+                                <h3 className="font-semibold text-gray-900 mb-2">Launch Rate</h3>
                                 <p className="text-2xl font-bold text-blue-600">$300</p>
                                 <p className="text-sm text-gray-600">One-time setup fee</p>
                             </div>
@@ -322,7 +322,7 @@
                                 <strong>Auto Top-up:</strong> 500 credits rollover for 1 month • <strong>Monthly Credits per Subscriber:</strong> 6.5
                             </p>
                             <p className="text-center text-sm text-gray-600 mt-2">
-                                 
+                                Every 2 extra broadcasts incentivize users to upgrade to the next tier
                             </p>
                         </div>
                     </div>
