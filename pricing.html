@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Calculator</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        // Check icon component
+        const Check = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+        );
+
+        const PricingCalculator = () => {
+            const [selectedTier, setSelectedTier] = React.useState('Growth');
+            const [numberOfLeads, setNumberOfLeads] = React.useState(1000);
+            const [messagesPerLead, setMessagesPerLead] = React.useState(3);
+
+            const pricingTiers = [
+                {
+                    name: 'Starter',
+                    price: 120,
+                    credits: 1500,
+                    effectiveRate: 0.0800,
+                    topOffRate: 0.080,
+                    subscribers: 209,
+                    topUpsForUpgrading: 1,
+                    broadcastsThreshold: 3,
+                    color: 'bg-gray-50 border-gray-200',
+                    popular: false
+                },
+                {
+                    name: 'Essentials',
+                    price: 175,
+                    credits: 2500,
+                    effectiveRate: 0.0700,
+                    topOffRate: 0.070,
+                    subscribers: 348,
+                    topUpsForUpgrading: 2,
+                    broadcastsThreshold: 3,
+                    color: 'bg-gray-50 border-gray-200',
+                    popular: false
+                },
+                {
+                    name: 'Growth',
+                    price: 250,
+                    credits: 4000,
+                    effectiveRate: 0.0625,
+                    topOffRate: 0.065,
+                    subscribers: 556,
+                    topUpsForUpgrading: 2,
+                    broadcastsThreshold: 2,
+                    color: 'bg-blue-50 border-blue-300',
+                    popular: true
+                },
+                {
+                    name: 'Plus',
+                    price: 325,
+                    credits: 6000,
+                    effectiveRate: 0.0542,
+                    topOffRate: 0.055,
+                    subscribers: 834,
+                    topUpsForUpgrading: 4,
+                    broadcastsThreshold: 2,
+                    color: 'bg-gray-50 border-gray-200',
+                    popular: false
+                },
+                {
+                    name: 'Pro',
+                    price: 425,
+                    credits: 8500,
+                    effectiveRate: 0.0500,
+                    topOffRate: 0.050,
+                    subscribers: 1182,
+                    topUpsForUpgrading: 7,
+                    broadcastsThreshold: 3,
+                    color: 'bg-gray-50 border-gray-200',
+                    popular: false
+                },
+                {
+                    name: 'Elite',
+                    price: 600,
+                    credits: 12500,
+                    effectiveRate: 0.0480,
+                    topOffRate: 0.050,
+                    subscribers: 1738,
+                    topUpsForUpgrading: 10,
+                    broadcastsThreshold: 3,
+                    color: 'bg-gray-50 border-gray-200',
+                    popular: false
+                },
+                {
+                    name: 'Max',
+                    price: 850,
+                    credits: 19000,
+                    effectiveRate: 0.0447,
+                    topOffRate: 0.045,
+                    subscribers: 2641,
+                    topUpsForUpgrading: 7,
+                    broadcastsThreshold: 1,
+                    color: 'bg-gray-50 border-gray-200',
+                    popular: false
+                },
+                {
+                    name: 'Enterprise',
+                    price: 1000,
+                    credits: 25000,
+                    effectiveRate: 0.0400,
+                    topOffRate: 0.040,
+                    subscribers: 3475,
+                    topUpsForUpgrading: 0,
+                    broadcastsThreshold: 0,
+                    color: 'bg-purple-50 border-purple-300',
+                    popular: false
+                }
+            ];
+
+            const totalMessages = numberOfLeads * messagesPerLead;
+            
+            const calculateRecommendedTier = () => {
+                for (let tier of pricingTiers) {
+                    if (totalMessages <= tier.credits) {
+                        return tier.name;
+                    }
+                }
+                return 'Enterprise';
+            };
+
+            const recommendedTier = calculateRecommendedTier();
+
+            return (
+                <div className="max-w-7xl mx-auto p-6 bg-white">
+                    {/* Header */}
+                    <div className="text-center mb-8">
+                        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+                            Choose Your Messaging Plan
+                        </h1>
+                        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                            Calculate your messaging needs and find the perfect plan for your business
+                        </p>
+                    </div>
+
+                    {/* Calculator Section */}
+                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 mb-12">
+                        <h2 className="text-2xl font-semibold text-gray-900 mb-6 text-center">
+                            Calculate Your Messaging Needs
+                        </h2>
+                        
+                        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                            <div className="bg-white rounded-lg p-6 shadow-sm">
+                                <label className="block text-sm font-medium text-gray-700 mb-3">
+                                    Number of Leads/Prospects
+                                </label>
+                                <input
+                                    type="number"
+                                    value={numberOfLeads}
+                                    onChange={(e) => setNumberOfLeads(Number(e.target.value))}
+                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+                                    placeholder="1000"
+                                />
+                            </div>
+                            
+                            <div className="bg-white rounded-lg p-6 shadow-sm">
+                                <label className="block text-sm font-medium text-gray-700 mb-3">
+                                    Messages per Lead
+                                </label>
+                                <input
+                                    type="number"
+                                    value={messagesPerLead}
+                                    onChange={(e) => setMessagesPerLead(Number(e.target.value))}
+                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+                                    placeholder="3"
+                                />
+                            </div>
+                            
+                            <div className="bg-white rounded-lg p-6 shadow-sm">
+                                <label className="block text-sm font-medium text-gray-700 mb-3">
+                                    Total Messages Needed
+                                </label>
+                                <div className="px-4 py-3 bg-gray-50 rounded-lg text-lg font-semibold text-gray-900">
+                                    {totalMessages.toLocaleString()}
+                                </div>
+                            </div>
+                        </div>
+
+                        {recommendedTier && (
+                            <div className="mt-6 text-center">
+                                <p className="text-lg text-gray-700">
+                                    <span className="font-semibold text-blue-600">Recommended Plan: {recommendedTier}</span>
+                                </p>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Pricing Tiers */}
+                    <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-6">
+                        {pricingTiers.map((tier) => (
+                            <div
+                                key={tier.name}
+                                className={`relative rounded-2xl border-2 p-6 transition-all duration-200 hover:shadow-lg ${
+                                    tier.name === recommendedTier 
+                                        ? 'border-green-400 bg-green-50 shadow-lg scale-105' 
+                                        : tier.color
+                                }`}
+                            >
+                                {tier.popular && (
+                                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                                        <span className="bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-medium">
+                                            Popular
+                                        </span>
+                                    </div>
+                                )}
+                                
+                                {tier.name === recommendedTier && (
+                                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                                        <span className="bg-green-600 text-white px-4 py-1 rounded-full text-sm font-medium">
+                                            Recommended
+                                        </span>
+                                    </div>
+                                )}
+
+                                <div className="text-center mb-6">
+                                    <h3 className="text-xl font-bold text-gray-900 mb-2">{tier.name}</h3>
+                                    <div className="mb-2">
+                                        <span className="text-3xl font-bold text-gray-900">${tier.price}</span>
+                                        <span className="text-gray-600">/month</span>
+                                    </div>
+                                    <p className="text-sm text-gray-600">{tier.credits.toLocaleString()} credits included</p>
+                                </div>
+
+                                <div className="space-y-3 mb-6">
+                                    <div className="flex items-center text-sm">
+                                        <Check className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
+                                        <span>Up to {tier.subscribers.toLocaleString()} subscribers</span>
+                                    </div>
+                                    <div className="flex items-center text-sm">
+                                        <Check className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
+                                        <span>${(tier.effectiveRate * 100).toFixed(2)}¢ effective rate</span>
+                                    </div>
+                                    <div className="flex items-center text-sm">
+                                        <Check className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
+                                        <span>${(tier.topOffRate * 100).toFixed(1)}¢ top-off rate</span>
+                                    </div>
+                                    {tier.broadcastsThreshold > 0 ? (
+                                        <div className="flex items-center text-sm">
+                                            <Check className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
+                                            <span>{tier.broadcastsThreshold} broadcasts needed to upgrade</span>
+                                        </div>
+                                    ) : (
+                                        <div className="flex items-center text-sm">
+                                            <Check className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
+                                            <span>No upgrade threshold</span>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <button
+                                    onClick={() => setSelectedTier(tier.name)}
+                                    className={`w-full py-3 px-4 rounded-lg font-medium transition-all duration-200 ${
+                                        tier.name === selectedTier
+                                            ? 'bg-blue-600 text-white hover:bg-blue-700'
+                                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                    }`}
+                                >
+                                    {tier.name === selectedTier ? 'Selected' : 'Select Plan'}
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Additional Info */}
+                    <div className="mt-12 bg-gray-50 rounded-2xl p-8">
+                        <div className="grid md:grid-cols-3 gap-8 text-center">
+                            <div>
+                                <h3 className="font-semibold text-gray-900 mb-2">Launch Rate</h3>
+                                <p className="text-2xl font-bold text-blue-600">$300</p>
+                                <p className="text-sm text-gray-600">One-time setup fee</p>
+                            </div>
+                            <div>
+                                <h3 className="font-semibold text-gray-900 mb-2">Basic Credits</h3>
+                                <p className="text-2xl font-bold text-blue-600">1 credit</p>
+                                <p className="text-sm text-gray-600">Per basic message</p>
+                            </div>
+                            <div>
+                                <h3 className="font-semibold text-gray-900 mb-2">Premium Credits</h3>
+                                <p className="text-2xl font-bold text-blue-600">3 credits</p>
+                                <p className="text-sm text-gray-600">Per premium message</p>
+                            </div>
+                        </div>
+                        
+                        <div className="mt-8 pt-6 border-t border-gray-200">
+                            <p className="text-center text-sm text-gray-600">
+                                <strong>Auto Top-up:</strong> 500 credits rollover for 1 month • <strong>Monthly Credits per Subscriber:</strong> 6.5
+                            </p>
+                            <p className="text-center text-sm text-gray-600 mt-2">
+                                Every 2 extra broadcasts incentivize users to upgrade to the next tier
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<PricingCalculator />, document.getElementById('root'));
+    </script>
+</body>
+</html>
