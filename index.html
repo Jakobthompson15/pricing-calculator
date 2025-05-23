@@ -12,6 +12,9 @@
 <body>
     <div id="root"></div>
     
+    <!-- Hidden image for logo -->
+    <canvas id="logoCanvas" style="display: none;"></canvas>
+    
     <script type="text/babel">
         // Check icon component
         const Check = ({ className }) => (
@@ -139,6 +142,15 @@
 
             return (
                 <div className="max-w-7xl mx-auto p-6 bg-white">
+                    {/* Logo */}
+                    <div className="mb-8">
+                        <img 
+                            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjgwIiB2aWV3Qm94PSIwIDAgMjAwIDgwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZGVmcz4KPHN0eWxlPgouYm9vc3RseS1sb2dvIHsgZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmOyB9Cjwvc3R5bGU+CjwvZGVmcz4KPCEtLSBMb2dvIFNoYXBlIC0tPgo8Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIxNSIgZmlsbD0iIzY2MzNmZiIvPgo8Y2lyY2xlIGN4PSI0NSIgY3k9IjIwIiByPSIxNSIgZmlsbD0iIzY2MzNmZiIvPgo8Y2lyY2xlIGN4PSIyMCIgY3k9IjQ1IiByPSIxNSIgZmlsbD0iIzY2MzNmZiIvPgo8Y2lyY2xlIGN4PSI0NSIgY3k9IjQ1IiByPSIxNSIgZmlsbD0iIzY2MzNmZiIvPgo8cG9seWdvbiBwb2ludHM9IjI3LDI3IDMzLDI3IDMzLDMzIDM4LDMzIDM4LDM4IDMzLDM4IDMzLDMzIDI3LDMzIiBmaWxsPSJ3aGl0ZSIvPgo8IS0tIFRleHQgLS0+Cjx0ZXh0IHg9IjcwIiB5PSI0NSIgZm9udC1zaXplPSIzNiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMyZDNhNGYiIGNsYXNzPSJib29zdGx5LWxvZ28iPkJvb3N0bHk8L3RleHQ+Cjwvc3ZnPgo=" 
+                            alt="Boostly" 
+                            className="h-12 w-auto"
+                        />
+                    </div>
+                    
                     {/* Header */}
                     <div className="text-center mb-8">
                         <h1 className="text-4xl font-bold text-gray-900 mb-4">
